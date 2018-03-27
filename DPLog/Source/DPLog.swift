@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Darwin
 
 
 /// 日志Level
@@ -23,32 +24,45 @@ enum DPLogLevel {
     
     
 //    ❤️🧡💛💚💙💜🖤💔
+    //
     func description() -> String {
         switch self {
         case .info:
-            return "💜"
+            return " INFO ℹ️"
         case .warning:
-            return "💛"
+            return " WARN ⚠️"
         case .error:
-            return "❤️"
+            return "ERROR ❌"
         case .crash:
-            return "💔"
+            return "CRASH 🆘"
         }
     }
 }
 
 func LogInfo(_ info: Any, file: String = #file, function: String = #function, line: Int = #line, date: Date = Date(), process: ProcessInfo = ProcessInfo.processInfo, thread: Thread = Thread.current) {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.sss"
-    formatter.locale = Locale(identifier: "zh_CN")
-    if let fileName = file.components(separatedBy: "/").last {
-        print("\(formatter.string(from: date)) \(process.processName)[\(thread.isMainThread ? "MainTread": "SubThread")] \(fileName)[\(line)] \(function) \(DPLogLevel.info.description()) \(info)")
+    
+    let tid = pthread_mach_thread_np(pthread_self())
+    print(tid)
+    if info is String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+        formatter.locale = Locale(identifier: "zh_CN")
+        if let fileName = file.components(separatedBy: "/").last {
+            print("\(formatter.string(from: date)) \(process.processName)[\(thread.isMainThread ? "MainTread": "SubThread"):\(tid)] \(fileName)[\(line)] \(function) \(DPLogLevel.info.description()) \(info)")
+        }
+    } else {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+        formatter.locale = Locale(identifier: "zh_CN")
+        if let fileName = file.components(separatedBy: "/").last {
+            print("\(formatter.string(from: date)) \(process.processName)[\(thread.isMainThread ? "MainTread": "SubThread")] \(fileName)[\(line)] \(function) \(DPLogLevel.info.description()) ⬇⬇⬇ \r\n\(info) \n")
+        }
     }
 }
 
 func LogWarning(_ warning: Any, file: String = #file, function: String = #function, line: Int = #line, date: Date = Date(), process: ProcessInfo = ProcessInfo.processInfo, thread: Thread = Thread.current) {
     let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.sss"
+    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
     formatter.locale = Locale(identifier: "zh_CN")
     if let fileName = file.components(separatedBy: "/").last {
         print("\(formatter.string(from: date)) \(process.processName)[\(thread.isMainThread ? "MainTread": "SubThread")] \(fileName)[\(line)] \(function) \(DPLogLevel.warning.description()) \(warning)")
@@ -58,7 +72,7 @@ func LogWarning(_ warning: Any, file: String = #file, function: String = #functi
 func LogError(_ error: Error, file: String = #file, function: String = #function, line: Int = #line, date: Date = Date(), process: ProcessInfo = ProcessInfo.processInfo, thread: Thread = Thread.current) {
     
     let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.sss"
+    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
     formatter.locale = Locale(identifier: "zh_CN")
     if let fileName = file.components(separatedBy: "/").last {
         print("\(formatter.string(from: date)) \(process.processName)[\(thread.isMainThread ? "MainTread": "SubThread")] \(fileName)[\(line)] \(function) \(DPLogLevel.error.description()) \(error)")
@@ -68,7 +82,7 @@ func LogError(_ error: Error, file: String = #file, function: String = #function
 func LogCrash(_ crash: Error, file: String = #file, function: String = #function, line: Int = #line, date: Date = Date(), process: ProcessInfo = ProcessInfo.processInfo, thread: Thread = Thread.current) {
     
     let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.sss"
+    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
     formatter.locale = Locale(identifier: "zh_CN")
     if let fileName = file.components(separatedBy: "/").last {
         print("\(formatter.string(from: date)) \(process.processName)[\(thread.isMainThread ? "MainTread": "SubThread")] \(fileName)[\(line)] \(function) \(DPLogLevel.crash.description()) \(crash)")
