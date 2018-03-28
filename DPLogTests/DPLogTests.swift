@@ -41,22 +41,23 @@ class DPLogTests: XCTestCase {
     func testLogInfo() {
         
         LogInfo("This is info messae")
+        LogInfo("This is info messae")
+        LogInfo("This is info messae")
         
-        DispatchQueue.global().async {
-            LogInfo("This is info messae 2")
-        }
-        
-        DispatchQueue.global().async {
-            LogInfo("This is info messae 3")
-        }
-        
-        DispatchQueue.global().async {
-            LogInfo("This is info messae 4")
-            LogInfo("This is info messae 5")
-        }
-        
-        LogWarning("这是⚠️")
-        LogError(MyError.Unknow)
-        LogCrash(MyError.Crash)
+//        DispatchQueue.global().async {
+//            LogInfo("This is info messae 2")
+//        }
+//        
+//        DispatchQueue.global().async {
+//            LogInfo("This is info messae 3")
+//        }
+//        
+//        DispatchQueue.global().async {
+//            LogInfo("This is info messae 4")
+//            LogInfo("This is info messae 5")
+//        }
+//        
+//        print("\n")
+//        NSLog("\nasdf")
     }
 }
