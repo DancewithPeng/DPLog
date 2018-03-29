@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E19FC13206CC5E60034587A /* DPStringParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E19FC12206CC5E60034587A /* DPStringParser.swift */; };
 		6EDB842320689D7C0025D556 /* DPLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDB841920689D7C0025D556 /* DPLog.framework */; };
 		6EDB842820689D7C0025D556 /* DPLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDB842720689D7C0025D556 /* DPLogTests.swift */; };
 		6EDB842A20689D7C0025D556 /* DPLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EDB841C20689D7C0025D556 /* DPLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -24,6 +25,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6E19FC12206CC5E60034587A /* DPStringParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPStringParser.swift; sourceTree = "<group>"; };
 		6EDB841920689D7C0025D556 /* DPLog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DPLog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EDB841C20689D7C0025D556 /* DPLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPLog.h; sourceTree = "<group>"; };
 		6EDB841D20689D7C0025D556 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				6EDB843420689DB60025D556 /* DPLog.swift */,
+				6E19FC12206CC5E60034587A /* DPStringParser.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6EDB843520689DB60025D556 /* DPLog.swift in Sources */,
+				6E19FC13206CC5E60034587A /* DPStringParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

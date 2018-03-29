@@ -46,78 +46,74 @@ class DPLogManager {
     /// 单例
     static let shared = DPLogManager()
     
-    /// 日志格式
-    static var format = "$Dyyyy-MM-dd HH:mm:ss.SSS$d $F $f $l $P $p $t $m"
+    /// 打印器集合
+    private lazy var loggers = [DPLogger]()
     
-    lazy var loggers = Set<DPLogger>()
+    /// 默认格式
+    static var format = "&Dyyyy-MM-dd HH:mm:ss.SSS&d &P &F &f &l &P &p &T &t &L"
     
-//    /// 添加日志打印器
-//    ///
-//    /// - Parameter logger: 日志打印器
-//    static func add(logger: DPLogger) {
-//
-//    }
+    /// 添加日志打印器
+    ///
+    /// - Parameter logger: 日志打印器
+    func add(logger: DPLogger) {
+        if !loggers.contains(where: { $0.identifier == logger.identifier }) {
+            loggers.append(logger)
+        }
+    }
+    
+    func log(level: DPLogLevel, obj: Any, file: String, function: String, line: Int, date: Date, process: ProcessInfo, thread: Thread) {
+        
+        let threadID = pthread_mach_thread_np(pthread_self())
+        
+        let values: [String: Any] = ["level": level,
+                                     "file": file,
+                                     "function": function,
+                                     "line": line,
+                                     "date": date,
+                                     "process": process,
+                                     "thread": thread,
+                                     "threadID": threadID,
+                                     "message": obj
+                                     ]
+        for logger in loggers {
+            var message = ""
+            if let loggerFormat = logger.format {
+                message = logger.formatParser.parse(format: loggerFormat, values: values)
+            } else {
+                message = logger.formatParser.parse(format: DPLogManager.format, values: values)
+            }
+            
+            logger.log(level: level, message: message)
+        }
+    }
 }
 
+//info: Any, file: String = #file, function: String = #function, line: Int = #line, date: Date = Date(), process: ProcessInfo = ProcessInfo.processInfo, thread: Thread = Thread.current
+
+/// 日志格式数据
+struct DPLogFormatData {
+    var file: String            // 文件
+    var line: Int               // 行数
+    var function: String        // 函数
+    var date: Date              // 日期
+    var process: ProcessInfo    // 进程
+    var thread: Thread          // 线程
+    var threadID: UInt32        // 线程ID
+}
+
+/// 日志格式规则
+struct DPLogFormatRule {
+    
+    let regex: String
+    
+    func apply(value: Any) -> String {
+        return "\(value)"
+    }
+}
 
 func LogInfo(_ info: Any, file: String = #file, function: String = #function, line: Int = #line, date: Date = Date(), process: ProcessInfo = ProcessInfo.processInfo, thread: Thread = Thread.current) {
     
-    let logger = DPConsoleLogger()
-    
-    /*
-    
-    //print(tid)
-    
-    let l1 = DPLogLevel.crash
-    let l2 = DPLogLevel.error
-    
-    if l1 == l2 {
-        print("等于")
-    }
-    
-    if l1 < l2 {
-        print("小于")
-    }
-    
-    if l1 <= l2 {
-        print("小于等于")
-    }
-    
-    if l1 > l2 {
-        print("大于")
-    }
-    
-    if l1 >= l2 {
-        print("大于等于")
-    }
-    
-    let time = Date().timeIntervalSince1970
-    
-    print("----------")
-    print(date)
-    print(time)
- 
- */
-    let tid = pthread_mach_thread_np(pthread_self())
-    
-    var message = ""
-    if info is String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-        formatter.locale = Locale(identifier: "zh_CN")
-        if let fileName = file.components(separatedBy: "/").last {
-            message = "\(formatter.string(from: date)) \(process.processName)[\(thread.isMainThread ? "MainTread": "SubThread"):\(tid)] \(fileName)[\(line)] \(function) \(DPLogLevel.info) \(info)"
-        }
-    } else {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-        formatter.locale = Locale(identifier: "zh_CN")
-        if let fileName = file.components(separatedBy: "/").last {
-            message = "\(formatter.string(from: date)) \(process.processName)[\(thread.isMainThread ? "MainTread": "SubThread")] \(fileName)[\(line)] \(function) \(DPLogLevel.info) ⬇⬇⬇ \r\n\(info) \n"
-        }
-    }
-    
-    logger.log(level: .info, message: message)
+    DPLogManager.shared.log(level: .info, obj: info, file: file, function: function, line: line, date: date, process: process, thread: thread)
 }
 
 func LogWarning(_ warning: Any, file: String = #file, function: String = #function, line: Int = #line, date: Date = Date(), process: ProcessInfo = ProcessInfo.processInfo, thread: Thread = Thread.current) {
@@ -161,13 +157,22 @@ struct DPLogTask {
 }
 
 /// 日志打印器，输出的地方：控制台？文件？服务器？
-protocol DPLogger: Hashable {
+protocol DPLogger {
+    
+    /// 标识符
+    var identifier: String { get }
     
     /// 日志输出(打印)等级
     var outputLevel: DPLogLevel { get set }
     
     /// 日志输出(打印)队列
     var outputQueue: DispatchQueue { get }
+    
+    /// 日志格式解析器
+    var formatParser: DPLogFormatParser { get }
+    
+    /// 日志格式
+    var format: String? { get }
     
     /// 输出(打印)操作
     ///
@@ -197,20 +202,18 @@ extension DPLogger {
 /// 控制台打印器
 class DPConsoleLogger: DPLogger {
     
-    var outputLevel: DPLogLevel = .warning
+    var identifier: String = "DPConsoleLogger"
+    
+    var outputLevel: DPLogLevel = .info
+    
+    let formatParser: DPLogFormatParser = DPLogFormatParser()
+    
+    var format: String?
     
     lazy var outputQueue: DispatchQueue = DispatchQueue(label: "DPConsoleLoggerQueue", qos: .default, attributes: DispatchQueue.Attributes.concurrent)
     
     func output(message: String) {
         print(message)
-    }
-    
-    var hashValue: Int {
-        return outputQueue.hashValue
-    }
-    
-    static func ==(lhs: DPConsoleLogger, rhs: DPConsoleLogger) -> Bool {
-        return lhs.hashValue == rhs.hashValue
     }
 }
 

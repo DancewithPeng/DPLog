@@ -40,6 +40,9 @@ class DPLogTests: XCTestCase {
     
     func testLogInfo() {
         
+        let consoleLogger = DPConsoleLogger()
+        DPLogManager.shared.add(logger: consoleLogger)
+        
         LogInfo("This is info messae")
         LogInfo("This is info messae")
         LogInfo("This is info messae")
@@ -59,5 +62,11 @@ class DPLogTests: XCTestCase {
 //        
 //        print("\n")
 //        NSLog("\nasdf")
+    }
+    
+    func testParser() {
+        let p = DPLogFormatParser()
+        let data = DPLogFormatData(file: "", line: 0, function: "", date: Date(), process: ProcessInfo.processInfo, thread: Thread.current, threadID: 12)
+//        p//    let logger = DPConsoleLogger().parse(data: data)
     }
 }
