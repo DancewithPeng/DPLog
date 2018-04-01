@@ -47,6 +47,9 @@ class DPLogFormatParser {
         
         // message
         patterns.append(DPLogDefaultPattern(regex: "&m", valueKey: "message"))
+        
+        // 是否为主线程
+        patterns.append(DPLogIsMainThreadPattern(valueKey: "thread"))
     }
     
     func parse(format: String, values: [String: Any]) -> String {
@@ -110,5 +113,22 @@ struct DPLogDetePattern: Pattern {
         let dateString = dateFormatter.string(from: date)
         
         return format.replacingCharacters(in: range, with: dateString)
+    }
+}
+
+struct DPLogIsMainThreadPattern: Pattern {
+    
+    let valueKey: String
+    
+    var regex: String {
+        return "&M"
+    }
+    
+    func handle(format: String, values: [String : Any]) -> String {
+        guard let thread = values[valueKey] as? Thread else {
+            return format
+        }
+        
+        return format.replacingOccurrences(of: regex, with: thread.isMainThread ? "M" : "S", options: .regularExpression)
     }
 }

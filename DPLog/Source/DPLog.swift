@@ -9,6 +9,270 @@
 import Foundation
 import Darwin
 
+// 1.一个结构
+// 2.能表示参数类型
+// 3.同时能表示参数值
+// 4.对应解析的正则表达式
+
+// 结构体
+//struct Params {
+//    var file: (String, String)?
+//}
+
+//let p = Params()
+//p.file =
+
+// 枚举
+enum DPLogParams {
+    case level(DPLogLevel)
+    case message(Any)
+    case file(String)
+    case line(Int)
+    case function(String)
+    case date(Date)
+    case process(ProcessInfo)
+    case processID(Int32)
+    case thread(Thread)
+    case threadID(UInt32)
+    case isMainThread(Bool)
+}
+
+
+/// 日志格式解析器
+protocol LogFormatParser {
+    
+    /// 解析格式，根据指定参数，解析格式，并返回解析后的字符串
+    ///
+    /// - Parameters:
+    ///   - format: 格式
+    ///   - params: 对应的参数
+    /// - Returns: 返回解析后的字符串
+    func parse(format: String, params: [DPLogParams]) -> String
+    
+    
+    /// 返回参数对应的匹配正则表达式
+    ///
+    /// - Parameter param: 参数
+    /// - Returns: 返回参数对应的匹配正则表达式
+    func pattern(forParam param: DPLogParams) -> String
+    
+    
+    /// 处理匹配的正则表达式
+    ///
+    /// - Parameters:
+    ///   - pattern: 需要处理的匹配正则表达式
+    ///   - param: 参数
+    /// - Returns: 返回处理过的字符串
+    func processPattern(pattern: String, param: DPLogParams) -> String
+    
+    
+    // 表示格式的正则表达式
+    var levelPattern: String { get }
+    var messagePattern: String { get }
+    var filePattern: String { get }
+    var linePattern: String { get }
+    var functionPattern: String { get }
+    var datePattern: String { get }
+    var processPattern: String { get }
+    var processIDPattern: String { get }
+    var threadPattern: String { get }
+    var threadIDPattern: String { get }
+    var isMainThreadPattern: String { get }
+    
+    // 处理方法
+    func processLevelPattern(pattern: String, level: DPLogLevel) -> String
+    func processMessagePattern(pattern: String, message: Any) -> String
+    func processFilePattern(pattern: String, file: String) -> String
+    func processLinePattern(pattern: String, line: Int) -> String
+    func processFunctionPattern(pattern: String, function: String) -> String
+    func processDatePattern(pattern: String, date: Date) -> String
+    func processProcessPattern(pattern: String, process: ProcessInfo) -> String
+    func processProcessIDPattern(pattern: String, processID: Int32) -> String
+    func processThreadPattern(pattern: String, thread: Thread) -> String
+    func processThreadIDPattern(pattern: String, threadID: UInt32) -> String
+    func processIsMainThreadPattern(pattern: String, isMainThread: Bool) -> String
+}
+
+extension LogFormatParser {
+    
+    func parse(format: String, params: [DPLogParams]) -> String {
+        
+        var ret = format
+        
+        for param in params {
+            let ptn: String = pattern(forParam: param)
+            if let range = ret.range(of: ptn, options: .regularExpression) {
+                let ptnStr = ret[range]
+                let processedPtnStr = processPattern(pattern: String(ptnStr), param: param)
+                ret = ret.replacingCharacters(in: range, with: processedPtnStr)
+            }
+        }
+        
+        return ret
+    }
+    
+    func pattern(forParam param: DPLogParams) -> String {
+        switch param {
+        case .level:
+            return levelPattern
+        case .message:
+            return messagePattern
+        case .file:
+            return filePattern
+        case .line:
+            return linePattern
+        case .function:
+            return functionPattern
+        case .date:
+            return datePattern
+        case .process:
+            return processPattern
+        case .processID:
+            return processIDPattern
+        case .thread:
+            return threadPattern
+        case .threadID:
+            return threadIDPattern
+        case .isMainThread:
+            return isMainThreadPattern
+        }
+    }
+    
+    func processPattern(pattern: String, param: DPLogParams) -> String {
+        switch param {
+        case .level(let level):
+            return processLevelPattern(pattern: pattern, level: level)
+        case .message(let msg):
+            return processMessagePattern(pattern: pattern, message: msg)
+        case .file(let file):
+            return processFilePattern(pattern: pattern, file: file)
+        case .line(let line):
+            return processLinePattern(pattern: pattern, line: line)
+        case .function(let function):
+            return processFunctionPattern(pattern: pattern, function: function)
+        case .date(let date):
+            return processDatePattern(pattern: pattern, date: date)
+        case .process(let process):
+            return processProcessPattern(pattern: pattern, process: process)
+        case .processID(let processID):
+            return processProcessIDPattern(pattern: pattern, processID: processID)
+        case .thread(let thread):
+            return processThreadPattern(pattern: pattern, thread: thread)
+        case .threadID(let threadID):
+            return processThreadIDPattern(pattern: pattern, threadID: threadID)
+        case .isMainThread(let isMainThread):
+            return processIsMainThreadPattern(pattern: pattern, isMainThread: isMainThread)
+        }
+    }
+}
+
+class MyFormatParser: LogFormatParser {
+    
+    lazy var dateFormatter = DateFormatter()
+    
+    let levelPattern: String        = "&L"
+    let messagePattern: String      = "&m"
+    let filePattern: String         = "&F"
+    let linePattern: String         = "&l"
+    let functionPattern: String     = "&f"
+    let datePattern: String         = "&D.*?&d"
+    let processPattern: String      = "&P"
+    let processIDPattern: String    = "&p"
+    let threadPattern: String       = "&T"
+    let threadIDPattern: String     = "&t"
+    let isMainThreadPattern: String = "&M"
+    
+    func processLevelPattern(pattern: String, level: DPLogLevel) -> String {
+        return "\(level)"
+    }
+    
+    func processMessagePattern(pattern: String, message: Any) -> String {
+        return "\(message)"
+    }
+    
+    func processFilePattern(pattern: String, file: String) -> String {
+        return "\(file)"
+    }
+    
+    func processLinePattern(pattern: String, line: Int) -> String {
+        return "\(line)"
+    }
+    
+    func processFunctionPattern(pattern: String, function: String) -> String {
+        return "\(function)"
+    }
+    
+    func processDatePattern(pattern: String, date: Date) -> String {
+        
+        let dateRange = pattern.index(pattern.startIndex, offsetBy: 2)..<pattern.index(pattern.endIndex, offsetBy: -2)
+        let dateFormat = String(pattern[dateRange])
+        
+        dateFormatter.dateFormat = dateFormat
+        let dateString = dateFormatter.string(from: date)
+        
+        return dateString
+    }
+    
+    func processProcessPattern(pattern: String, process: ProcessInfo) -> String {
+        return "\(process.processName)"
+    }
+    
+    func processProcessIDPattern(pattern: String, processID: Int32) -> String {
+        return "\(processID)"
+    }
+    
+    func processThreadPattern(pattern: String, thread: Thread) -> String {
+        return thread.name==nil ? "\(thread)" : thread.name!
+    }
+    
+    func processThreadIDPattern(pattern: String, threadID: UInt32) -> String {
+        return "\(threadID)"
+    }
+    
+    func processIsMainThreadPattern(pattern: String, isMainThread: Bool) -> String {
+        return isMainThread ? "M" : "S"
+    }
+}
+
+
+
+
+
+//// 日期
+//patterns.append(DPLogDetePattern(valueKey: "date"))
+//
+//// 文件
+//patterns.append(DPLogDefaultPattern(regex: "&F", valueKey: "file"))
+//
+//// 函数
+//patterns.append(DPLogDefaultPattern(regex: "&f", valueKey: "function"))
+//
+//// 行数
+//patterns.append(DPLogDefaultPattern(regex: "&l", valueKey: "line"))
+//
+//// 进程名称
+//patterns.append(DPLogDefaultPattern(regex: "&P", valueKey: "process"))
+//
+//// 进程ID
+//patterns.append(DPLogDefaultPattern(regex: "&p", valueKey: "processID"))
+//
+//// 线程
+//patterns.append(DPLogDefaultPattern(regex: "&T", valueKey: "thread"))
+//
+//// 线程ID
+//patterns.append(DPLogDefaultPattern(regex: "&t", valueKey: "threadID"))
+//
+//// log level
+//patterns.append(DPLogDefaultPattern(regex: "&L", valueKey: "level"))
+//
+//// message
+//patterns.append(DPLogDefaultPattern(regex: "&m", valueKey: "message"))
+//
+//// 是否为主线程
+//patterns.append(DPLogIsMainThreadPattern(valueKey: "thread"))
+
+//_ info: Any, file: String = #file, function: String = #function, line: Int = #line, date: Date = Date(), process: ProcessInfo = ProcessInfo.processInfo, thread: Thread = Thread.current
+
 
 /// 日志Level
 ///
@@ -50,7 +314,9 @@ class DPLogManager {
     private lazy var loggers = [DPLogger]()
     
     /// 默认格式
-    static var format = "&Dyyyy-MM-dd HH:mm:ss.SSS&d &P &F &f &l &P &p &T &t &L"
+    static var format = "&DHH:mm:ss.SSS&d &M[&t] &F[&l] &f &L &m"
+    
+    lazy var logFormatParser: LogFormatParser = MyFormatParser()
     
     /// 添加日志打印器
     ///
@@ -65,22 +331,31 @@ class DPLogManager {
         
         let threadID = pthread_mach_thread_np(pthread_self())
         
-        let values: [String: Any] = ["level": level,
-                                     "file": file,
-                                     "function": function,
-                                     "line": line,
-                                     "date": date,
-                                     "process": process,
-                                     "thread": thread,
-                                     "threadID": threadID,
-                                     "message": obj
-                                     ]
+        var fileName = file
+        if let f = file.components(separatedBy: "/").last {
+            fileName = f
+        }
+        
+        let params: [DPLogParams] = [
+            .level(level),
+            .message(obj),
+            .file(fileName),
+            .line(line),
+            .function(function),
+            .date(date),
+            .process(process),
+            .processID(process.processIdentifier),
+            .thread(thread),
+            .threadID(threadID),
+            .isMainThread(thread.isMainThread),
+        ]
+        
         for logger in loggers {
             var message = ""
             if let loggerFormat = logger.format {
-                message = logger.formatParser.parse(format: loggerFormat, values: values)
+                message = logFormatParser.parse(format: loggerFormat, params: params)
             } else {
-                message = logger.formatParser.parse(format: DPLogManager.format, values: values)
+                message = logFormatParser.parse(format: DPLogManager.format, params: params)
             }
             
             logger.log(level: level, message: message)
@@ -117,32 +392,18 @@ func LogInfo(_ info: Any, file: String = #file, function: String = #function, li
 }
 
 func LogWarning(_ warning: Any, file: String = #file, function: String = #function, line: Int = #line, date: Date = Date(), process: ProcessInfo = ProcessInfo.processInfo, thread: Thread = Thread.current) {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-    formatter.locale = Locale(identifier: "zh_CN")
-    if let fileName = file.components(separatedBy: "/").last {
-        print("\(formatter.string(from: date)) \(process.processName)[\(thread.isMainThread ? "MainTread": "SubThread")] \(fileName)[\(line)] \(function) \(DPLogLevel.warning) \(warning)")
-    }
+    
+    DPLogManager.shared.log(level: .warning, obj: warning, file: file, function: function, line: line, date: date, process: process, thread: thread)
 }
 
 func LogError(_ error: Error, file: String = #file, function: String = #function, line: Int = #line, date: Date = Date(), process: ProcessInfo = ProcessInfo.processInfo, thread: Thread = Thread.current) {
-    
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-    formatter.locale = Locale(identifier: "zh_CN")
-    if let fileName = file.components(separatedBy: "/").last {
-        print("\(formatter.string(from: date)) \(process.processName)[\(thread.isMainThread ? "MainTread": "SubThread")] \(fileName)[\(line)] \(function) \(DPLogLevel.error) \(error)")
-    }
+
+    DPLogManager.shared.log(level: .error, obj: error, file: file, function: function, line: line, date: date, process: process, thread: thread)
 }
 
 func LogCrash(_ crash: Error, file: String = #file, function: String = #function, line: Int = #line, date: Date = Date(), process: ProcessInfo = ProcessInfo.processInfo, thread: Thread = Thread.current) {
     
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-    formatter.locale = Locale(identifier: "zh_CN")
-    if let fileName = file.components(separatedBy: "/").last {
-        print("\(formatter.string(from: date)) \(process.processName)[\(thread.isMainThread ? "MainTread": "SubThread")] \(fileName)[\(line)] \(function) \(DPLogLevel.crash) \(crash)")
-    }
+    DPLogManager.shared.log(level: .crash, obj: crash, file: file, function: function, line: line, date: date, process: process, thread: thread)
 }
 
 
@@ -213,7 +474,7 @@ class DPConsoleLogger: DPLogger {
     lazy var outputQueue: DispatchQueue = DispatchQueue(label: "DPConsoleLoggerQueue", qos: .default, attributes: DispatchQueue.Attributes.concurrent)
     
     func output(message: String) {
-        print(message)
+        print("\n\(message)")
     }
 }
 

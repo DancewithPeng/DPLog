@@ -19,6 +19,11 @@ class DPLogTests: XCTestCase {
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        let consoleLogger = DPConsoleLogger()
+        let consoleLogger2 = DPConsoleLogger()
+        DPLogManager.shared.add(logger: consoleLogger)
+        DPLogManager.shared.add(logger: consoleLogger2)
     }
     
     override func tearDown() {
@@ -40,12 +45,22 @@ class DPLogTests: XCTestCase {
     
     func testLogInfo() {
         
-        let consoleLogger = DPConsoleLogger()
-        DPLogManager.shared.add(logger: consoleLogger)
+
+        for _ in 0..<5 {
+            DispatchQueue.global().async {
+                LogInfo("Hello World")
+            }
+        }
         
-        LogInfo("This is info messae")
-        LogInfo("This is info messae")
-        LogInfo("This is info messae")
+        for _ in 0..<3 {
+            LogInfo("Main Message")
+        }
+        
+        sleep(1)
+        
+        
+        //LogInfo("This is info messae")
+        //LogInfo("This is info messae")
         
 //        DispatchQueue.global().async {
 //            LogInfo("This is info messae 2")
@@ -62,6 +77,19 @@ class DPLogTests: XCTestCase {
 //        
 //        print("\n")
 //        NSLog("\nasdf")
+    }
+    
+    func testError() {
+        
+        enum MyError: Error {
+            case unknow
+            case ok
+            case lalala
+        }
+        
+        LogError(MyError.unknow)
+        LogError(MyError.ok)
+        LogError(MyError.lalala)
     }
     
     func testParser() {
