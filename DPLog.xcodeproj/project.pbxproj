@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E896CE92071BC25001DC8D9 /* DPLogFormatParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E896CE82071BC25001DC8D9 /* DPLogFormatParser.swift */; };
+		6E896CEB2071BD8F001DC8D9 /* DPDefaultLogFormatParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E896CEA2071BD8F001DC8D9 /* DPDefaultLogFormatParser.swift */; };
+		6E896CED2071BE1E001DC8D9 /* DPLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E896CEC2071BE1E001DC8D9 /* DPLogger.swift */; };
+		6E896CEF2071BE3D001DC8D9 /* DPConsoleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E896CEE2071BE3D001DC8D9 /* DPConsoleLogger.swift */; };
+		6E896CF12071BFDE001DC8D9 /* DPLogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E896CF02071BFDE001DC8D9 /* DPLogLevel.swift */; };
 		6EDB842320689D7C0025D556 /* DPLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDB841920689D7C0025D556 /* DPLog.framework */; };
 		6EDB842820689D7C0025D556 /* DPLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDB842720689D7C0025D556 /* DPLogTests.swift */; };
 		6EDB842A20689D7C0025D556 /* DPLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EDB841C20689D7C0025D556 /* DPLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -24,6 +29,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6E896CE82071BC25001DC8D9 /* DPLogFormatParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPLogFormatParser.swift; sourceTree = "<group>"; };
+		6E896CEA2071BD8F001DC8D9 /* DPDefaultLogFormatParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPDefaultLogFormatParser.swift; sourceTree = "<group>"; };
+		6E896CEC2071BE1E001DC8D9 /* DPLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPLogger.swift; sourceTree = "<group>"; };
+		6E896CEE2071BE3D001DC8D9 /* DPConsoleLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPConsoleLogger.swift; sourceTree = "<group>"; };
+		6E896CF02071BFDE001DC8D9 /* DPLogLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPLogLevel.swift; sourceTree = "<group>"; };
 		6EDB841920689D7C0025D556 /* DPLog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DPLog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EDB841C20689D7C0025D556 /* DPLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPLog.h; sourceTree = "<group>"; };
 		6EDB841D20689D7C0025D556 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -93,6 +103,11 @@
 			isa = PBXGroup;
 			children = (
 				6EDB843420689DB60025D556 /* DPLog.swift */,
+				6E896CF02071BFDE001DC8D9 /* DPLogLevel.swift */,
+				6E896CE82071BC25001DC8D9 /* DPLogFormatParser.swift */,
+				6E896CEA2071BD8F001DC8D9 /* DPDefaultLogFormatParser.swift */,
+				6E896CEC2071BE1E001DC8D9 /* DPLogger.swift */,
+				6E896CEE2071BE3D001DC8D9 /* DPConsoleLogger.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -154,7 +169,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "dancewithpeng@gmail.com";
 				TargetAttributes = {
 					6EDB841820689D7C0025D556 = {
@@ -208,7 +223,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E896CE92071BC25001DC8D9 /* DPLogFormatParser.swift in Sources */,
+				6E896CEF2071BE3D001DC8D9 /* DPConsoleLogger.swift in Sources */,
+				6E896CED2071BE1E001DC8D9 /* DPLogger.swift in Sources */,
 				6EDB843520689DB60025D556 /* DPLog.swift in Sources */,
+				6E896CEB2071BD8F001DC8D9 /* DPDefaultLogFormatParser.swift in Sources */,
+				6E896CF12071BFDE001DC8D9 /* DPLogLevel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,6 +265,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -252,6 +273,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -305,6 +327,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -312,6 +335,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;

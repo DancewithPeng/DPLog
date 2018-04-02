@@ -9,9 +9,9 @@
 import XCTest
 @testable import DPLog
 
-enum MyError: Error {
-    case Unknow
-    case Crash
+enum MyError: String, Error {
+    case Unknow = "🦋🦋🦋"
+    case Crash = "🐯🐯🐯"
 }
 
 class DPLogTests: XCTestCase {
@@ -19,6 +19,10 @@ class DPLogTests: XCTestCase {
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        let consoleLogger = DPConsoleLogger()
+        consoleLogger.outputLevel = .all
+        DPLogManager.addLogger(consoleLogger)
     }
     
     override func tearDown() {
@@ -39,9 +43,45 @@ class DPLogTests: XCTestCase {
     }
     
     func testLogInfo() {
-        LogInfo("This is info messae")
-        LogWarning("这是⚠️")
+        
+        for _ in 0..<5 {
+            DispatchQueue.global().async {
+                LogInfo("Hello World")
+            }
+        }
+        
+//        for _ in 0..<3 {
+//            LogInfo("Main Message")
+//        }
+        
+        sleep(3)
+    }
+    
+    func testError() {
+        
+        enum MyError: Error {
+            case unknow
+            case ok
+            case lalala
+        }
+        
+        LogError(MyError.unknow)
+        LogError(MyError.ok)
+        LogError(MyError.lalala)
+        
+        sleep(3)
+    }
+    
+    func testAll() {
+        LogInfo("🐶🐶🐶")
+        LogWarning("🦁🦁🦁")
         LogError(MyError.Unknow)
         LogCrash(MyError.Crash)
+        
+        sleep(3)
+    }
+    
+    func testParser() {        
+//        p//    let logger = DPConsoleLogger().parse(data: data)
     }
 }
