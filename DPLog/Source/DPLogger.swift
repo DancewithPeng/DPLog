@@ -37,21 +37,11 @@ public protocol DPLogger {
     func log(level: DPLogLevel, message: String)
 }
 
-var count = 0
-
 // MARK: - `DPLogger` 协议 `log(level:, message:)` 方法的默认实现
 extension DPLogger {
     
     public func log(level: DPLogLevel, message: String) {
-        
-        print("------")
-        
         if level >= outputLevel {
-            
-            print("====== \(count)")
-            count += 1
-            
-            
             objc_sync_enter(self)
             outputQueue.async {
                 self.output(message: message)

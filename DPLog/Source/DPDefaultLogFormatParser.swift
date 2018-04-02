@@ -35,6 +35,11 @@ public class DPDefaultLogFormatParser : DPLogFormatParser {
     }
     
     public func processMessagePattern(pattern: String, message: Any) -> String {
+        
+        if message is Error {
+            return "\(type(of: message)).\(message)"
+        }
+        
         return "\(message)"
     }
     

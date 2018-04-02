@@ -11,6 +11,8 @@ import Foundation
 /// 控制台打印器
 public class DPConsoleLogger: DPLogger {
     
+    public init() {}
+    
     public var identifier: String = "DPConsoleLogger"
     
     public var outputLevel: DPLogLevel = .info

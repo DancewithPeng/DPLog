@@ -16,9 +16,9 @@ public func LogInfo(_ info: Any, file: String = #file, function: String = #funct
 }
 
 /// 打印警告
-public func LogWarning(_ warning: Any, file: String = #file, function: String = #function, line: Int = #line, date: Date = Date(), process: ProcessInfo = ProcessInfo.processInfo, thread: Thread = Thread.current, threadID: UInt32 = pthread_mach_thread_np(pthread_self())) {
+public func LogWarn(_ warn: Any, file: String = #file, function: String = #function, line: Int = #line, date: Date = Date(), process: ProcessInfo = ProcessInfo.processInfo, thread: Thread = Thread.current, threadID: UInt32 = pthread_mach_thread_np(pthread_self())) {
     
-    DPLogManager.log(level: .warning, obj: warning, file: file, function: function, line: line, date: date, process: process, thread: thread, threadID: threadID)
+    DPLogManager.log(level: .warn, obj: warn, file: file, function: function, line: line, date: date, process: process, thread: thread, threadID: threadID)
 }
 
 /// 打印错误
@@ -33,6 +33,7 @@ public func LogCrash(_ crash: Error, file: String = #file, function: String = #f
     DPLogManager.log(level: .crash, obj: crash, file: file, function: function, line: line, date: date, process: process, thread: thread, threadID: threadID)
 }
 
+
 /// 日志管理器，用于设置DPLog的相关配置
 public class DPLogManager {
     
@@ -46,7 +47,7 @@ public class DPLogManager {
     private lazy var logQueue = DispatchQueue(label: "DPLogManagerLogQueue", qos: DispatchQoS.default)
     
     /// 日志打印格式，可定制
-    static var format = "&DHH:mm:ss.SSS&d &M[&t] &F[&l] &f &L: &m"
+    static var format = "&DHH:mm:ss.SSS&d &M[&t] &F[&l] &f &L &m"
     
     /// 日志格式解析器，可定制
     static var logFormatParser: DPLogFormatParser = DPDefaultLogFormatParser()

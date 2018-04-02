@@ -9,9 +9,9 @@
 import XCTest
 @testable import DPLog
 
-enum MyError: Error {
-    case Unknow
-    case Crash
+enum MyError: String, Error {
+    case Unknow = "🦋🦋🦋"
+    case Crash = "🐯🐯🐯"
 }
 
 class DPLogTests: XCTestCase {
@@ -21,10 +21,8 @@ class DPLogTests: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
         let consoleLogger = DPConsoleLogger()
-//        let consoleLogger2 = DPConsoleLogger()
-//        consoleLogger2.identifier = "consoleLogger2"
+        consoleLogger.outputLevel = .all
         DPLogManager.addLogger(consoleLogger)
-//        DPLogManager.addLogger(consoleLogger2)
     }
     
     override func tearDown() {
@@ -70,6 +68,17 @@ class DPLogTests: XCTestCase {
         LogError(MyError.unknow)
         LogError(MyError.ok)
         LogError(MyError.lalala)
+        
+        sleep(3)
+    }
+    
+    func testAll() {
+        LogInfo("🐶🐶🐶")
+        LogWarning("🦁🦁🦁")
+        LogError(MyError.Unknow)
+        LogCrash(MyError.Crash)
+        
+        sleep(3)
     }
     
     func testParser() {        
