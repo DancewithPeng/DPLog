@@ -21,9 +21,10 @@ class DPLogTests: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
         let consoleLogger = DPConsoleLogger()
-        let consoleLogger2 = DPConsoleLogger()
-        DPLogManager.shared.add(logger: consoleLogger)
-        DPLogManager.shared.add(logger: consoleLogger2)
+//        let consoleLogger2 = DPConsoleLogger()
+//        consoleLogger2.identifier = "consoleLogger2"
+        DPLogManager.addLogger(consoleLogger)
+//        DPLogManager.addLogger(consoleLogger2)
     }
     
     override func tearDown() {
@@ -45,38 +46,17 @@ class DPLogTests: XCTestCase {
     
     func testLogInfo() {
         
-
         for _ in 0..<5 {
             DispatchQueue.global().async {
                 LogInfo("Hello World")
             }
         }
         
-        for _ in 0..<3 {
-            LogInfo("Main Message")
-        }
-        
-        sleep(1)
-        
-        
-        //LogInfo("This is info messae")
-        //LogInfo("This is info messae")
-        
-//        DispatchQueue.global().async {
-//            LogInfo("This is info messae 2")
+//        for _ in 0..<3 {
+//            LogInfo("Main Message")
 //        }
-//        
-//        DispatchQueue.global().async {
-//            LogInfo("This is info messae 3")
-//        }
-//        
-//        DispatchQueue.global().async {
-//            LogInfo("This is info messae 4")
-//            LogInfo("This is info messae 5")
-//        }
-//        
-//        print("\n")
-//        NSLog("\nasdf")
+        
+        sleep(3)
     }
     
     func testError() {
@@ -92,9 +72,7 @@ class DPLogTests: XCTestCase {
         LogError(MyError.lalala)
     }
     
-    func testParser() {
-        let p = DPLogFormatParser()
-        let data = DPLogFormatData(file: "", line: 0, function: "", date: Date(), process: ProcessInfo.processInfo, thread: Thread.current, threadID: 12)
+    func testParser() {        
 //        p//    let logger = DPConsoleLogger().parse(data: data)
     }
 }
