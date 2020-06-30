@@ -73,10 +73,10 @@ class DPLogTests: XCTestCase {
     }
     
     func testAll() {
-        LogInfo("🐶🐶🐶")
-        LogWarning("🦁🦁🦁")
-        LogError(MyError.Unknow)
-        LogCrash(MyError.Crash)
+//        LogInfo("🐶🐶🐶")
+//        LogWarning("🦁🦁🦁")
+//        LogError(MyError.Unknow)
+//        LogCrash(MyError.Crash)
         
         sleep(3)
     }

@@ -9,22 +9,44 @@
 import UIKit
 import DPLog
 
+class MyFormatter: DPLogFormatter {
+    func formatString(for info: DPLogInformation) -> String {
+        return "\(info.message ?? "nil")"
+    }
+}
+
+class MyLogger: DPLogger {
+    
+    var logLevel: DPLogLevel
+    
+    var formatter: DPLogFormatter
+    
+    init() {
+        self.logLevel = .debug
+        self.formatter = MyFormatter()
+    }
+    
+    func log(message: String) {
+        print("MyLogger - \(message)")
+    }
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let consoleLogger = DPConsoleLogger()
         #if DEBUG
-        consoleLogger.outputLevel = .all
+        Log.setup(loggers: [DPConsoleLogger(logLevel: .debug)])
         #else
-        consoleLogger.outputLevel = .none
+        Log.setup(loggers: [
+            DPConsoleLogger(logLevel: .error),
+            MyLogger()
+        ])
         #endif
-        DPLogManager.addLogger(consoleLogger)
         
         return true
     }

@@ -16,4 +16,4 @@ FOUNDATION_EXPORT const unsigned char DPLogVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <DPLog/PublicHeader.h>
 
-
+#import <DPLog/DPLogObjC.h>
