@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import DPLog
+import DPLog
 
 enum MyError: String, Error {
     case Unknow = "🦋🦋🦋"
@@ -19,10 +19,10 @@ class DPLogTests: XCTestCase {
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        
+                
         let consoleLogger = DPConsoleLogger()
-        consoleLogger.outputLevel = .all
-        DPLogManager.addLogger(consoleLogger)
+        consoleLogger.logLevel = .verbose
+        Log.setup(loggers: [consoleLogger])
     }
     
     override func tearDown() {
@@ -30,31 +30,8 @@ class DPLogTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
     func testLogInfo() {
-        
-        for _ in 0..<5 {
-            DispatchQueue.global().async {
-                LogInfo("Hello World")
-            }
-        }
-        
-//        for _ in 0..<3 {
-//            LogInfo("Main Message")
-//        }
-        
-        sleep(3)
+        Log.info("Info Message")
     }
     
     func testError() {
@@ -65,9 +42,9 @@ class DPLogTests: XCTestCase {
             case lalala
         }
         
-        LogError(MyError.unknow)
-        LogError(MyError.ok)
-        LogError(MyError.lalala)
+//        LogError(MyError.unknow)
+//        LogError(MyError.ok)
+//        LogError(MyError.lalala)
         
         sleep(3)
     }

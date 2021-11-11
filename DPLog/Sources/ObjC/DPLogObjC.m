@@ -7,8 +7,10 @@
 //
 
 #import "DPLogObjC.h"
-#import <DPLog/DPLog-Swift.h>
+//#import <DPLog/DPLog-Swift.h>
 #import <pthread.h>
+
+@import DPLog;
 
 @implementation DPLog
 
