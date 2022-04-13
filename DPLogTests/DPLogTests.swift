@@ -9,20 +9,23 @@
 import XCTest
 import DPLog
 
+typealias Log = HandyLog
+
 enum MyError: String, Error {
     case Unknow = "🦋🦋🦋"
-    case Crash = "🐯🐯🐯"
+    case Crash  = "🐯🐯🐯"
 }
 
 class DPLogTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-                
-        let consoleLogger = DPConsoleLogger()
-        consoleLogger.logLevel = .verbose
-        Log.setup(loggers: [consoleLogger])
+    override func setUpWithError() throws {
+        guard DPLog.Collector.shared.handlers.contains(where: { $0.id == "DPLog.ConsoleHandler" }) == false else {
+            return
+        }
+        
+        try DPLog.Collector.shared.register(DPLog.ConsoleHandler(id: "DPLog.ConsoleHandler",
+                                                                 level: .verbose,
+                                                                 formatter: DPLog.PlainMessageFormatter()))
     }
     
     override func tearDown() {
@@ -42,23 +45,19 @@ class DPLogTests: XCTestCase {
             case lalala
         }
         
-//        LogError(MyError.unknow)
-//        LogError(MyError.ok)
-//        LogError(MyError.lalala)
+        Log.error(MyError.unknow)
+        Log.error(MyError.ok)
+        Log.error(MyError.lalala)
         
         sleep(3)
     }
     
     func testAll() {
-//        LogInfo("🐶🐶🐶")
-//        LogWarning("🦁🦁🦁")
-//        LogError(MyError.Unknow)
-//        LogCrash(MyError.Crash)
+        Log.debug(MyError.Crash)
+        Log.info("🐶🐶🐶")
+        Log.warning("🦁🦁🦁")
+        Log.error(MyError.Unknow)
         
         sleep(3)
-    }
-    
-    func testParser() {        
-//        p//    let logger = DPConsoleLogger().parse(data: data)
     }
 }

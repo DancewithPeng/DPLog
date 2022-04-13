@@ -7,19 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6EA340C724A9C5BC003773F8 /* DPLogInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA340C624A9C5BC003773F8 /* DPLogInformation.swift */; };
-		6EA340CA24A9CB75003773F8 /* DPConsoleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA340C924A9CB75003773F8 /* DPConsoleLogger.swift */; };
-		6EA340CC24A9CBE4003773F8 /* DPLogDefaultFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA340CB24A9CBE4003773F8 /* DPLogDefaultFormatter.swift */; };
-		6EA3410924A9E556003773F8 /* DPLogObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EA3410724A9E555003773F8 /* DPLogObjC.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6EA3410A24A9E556003773F8 /* DPLogObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EA3410824A9E556003773F8 /* DPLogObjC.m */; };
+		6E0107A6280598CD00DE4494 /* ConsoleHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E01079A280598CD00DE4494 /* ConsoleHandler.swift */; };
+		6E0107A7280598CD00DE4494 /* Collector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E01079C280598CD00DE4494 /* Collector.swift */; };
+		6E0107A8280598CD00DE4494 /* MessageFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E01079D280598CD00DE4494 /* MessageFormatter.swift */; };
+		6E0107A9280598CD00DE4494 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E01079E280598CD00DE4494 /* Message.swift */; };
+		6E0107AA280598CD00DE4494 /* Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E01079F280598CD00DE4494 /* Handler.swift */; };
+		6E0107AB280598CD00DE4494 /* DPLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E0107A1280598CD00DE4494 /* DPLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6E0107AC280598CD00DE4494 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0107A2280598CD00DE4494 /* Log.swift */; };
+		6E0107AD280598CD00DE4494 /* DPLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0107A3280598CD00DE4494 /* DPLog.m */; };
+		6E0107AE280598CD00DE4494 /* PlainMessageFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0107A5280598CD00DE4494 /* PlainMessageFormatter.swift */; };
 		6EDB842320689D7C0025D556 /* DPLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDB841920689D7C0025D556 /* DPLog.framework */; };
 		6EDB842820689D7C0025D556 /* DPLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDB842720689D7C0025D556 /* DPLogTests.swift */; };
-		6EDB842A20689D7C0025D556 /* DPLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EDB841C20689D7C0025D556 /* DPLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6EED0EAF24A9BA2100D1921A /* DPLogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EED0EAE24A9BA2100D1921A /* DPLogLevel.swift */; };
-		6EED0EB124A9BA5B00D1921A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EED0EB024A9BA5B00D1921A /* Log.swift */; };
-		6EED0EB324A9C1FA00D1921A /* DPLogCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EED0EB224A9C1FA00D1921A /* DPLogCoordinator.swift */; };
-		6EED0EB524A9C27100D1921A /* DPLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EED0EB424A9C27100D1921A /* DPLogger.swift */; };
-		6EED0EB724A9C3A000D1921A /* DPLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EED0EB624A9C3A000D1921A /* DPLogFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,22 +31,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6EA340C624A9C5BC003773F8 /* DPLogInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPLogInformation.swift; sourceTree = "<group>"; };
-		6EA340C924A9CB75003773F8 /* DPConsoleLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPConsoleLogger.swift; sourceTree = "<group>"; };
-		6EA340CB24A9CBE4003773F8 /* DPLogDefaultFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPLogDefaultFormatter.swift; sourceTree = "<group>"; };
-		6EA3410724A9E555003773F8 /* DPLogObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPLogObjC.h; sourceTree = "<group>"; };
-		6EA3410824A9E556003773F8 /* DPLogObjC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPLogObjC.m; sourceTree = "<group>"; };
+		6E01079A280598CD00DE4494 /* ConsoleHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleHandler.swift; sourceTree = "<group>"; };
+		6E01079C280598CD00DE4494 /* Collector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Collector.swift; sourceTree = "<group>"; };
+		6E01079D280598CD00DE4494 /* MessageFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageFormatter.swift; sourceTree = "<group>"; };
+		6E01079E280598CD00DE4494 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		6E01079F280598CD00DE4494 /* Handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Handler.swift; sourceTree = "<group>"; };
+		6E0107A1280598CD00DE4494 /* DPLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLog.h; sourceTree = "<group>"; };
+		6E0107A2280598CD00DE4494 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		6E0107A3280598CD00DE4494 /* DPLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLog.m; sourceTree = "<group>"; };
+		6E0107A5280598CD00DE4494 /* PlainMessageFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlainMessageFormatter.swift; sourceTree = "<group>"; };
 		6EDB841920689D7C0025D556 /* DPLog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DPLog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6EDB841C20689D7C0025D556 /* DPLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPLog.h; sourceTree = "<group>"; };
 		6EDB841D20689D7C0025D556 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6EDB842220689D7C0025D556 /* DPLogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DPLogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EDB842720689D7C0025D556 /* DPLogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPLogTests.swift; sourceTree = "<group>"; };
 		6EDB842920689D7C0025D556 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6EED0EAE24A9BA2100D1921A /* DPLogLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPLogLevel.swift; sourceTree = "<group>"; };
-		6EED0EB024A9BA5B00D1921A /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
-		6EED0EB224A9C1FA00D1921A /* DPLogCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPLogCoordinator.swift; sourceTree = "<group>"; };
-		6EED0EB424A9C27100D1921A /* DPLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPLogger.swift; sourceTree = "<group>"; };
-		6EED0EB624A9C3A000D1921A /* DPLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPLogFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,21 +66,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6EA340C824A9C7C3003773F8 /* Formatters */ = {
+		6E010799280598CD00DE4494 /* Handlers */ = {
 			isa = PBXGroup;
 			children = (
-				6EA340CB24A9CBE4003773F8 /* DPLogDefaultFormatter.swift */,
+				6E01079A280598CD00DE4494 /* ConsoleHandler.swift */,
 			);
-			path = Formatters;
+			path = Handlers;
 			sourceTree = "<group>";
 		};
-		6EA3410B24A9E565003773F8 /* ObjC */ = {
+		6E01079B280598CD00DE4494 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				6EA3410724A9E555003773F8 /* DPLogObjC.h */,
-				6EA3410824A9E556003773F8 /* DPLogObjC.m */,
+				6E01079C280598CD00DE4494 /* Collector.swift */,
+				6E01079D280598CD00DE4494 /* MessageFormatter.swift */,
+				6E01079E280598CD00DE4494 /* Message.swift */,
+				6E01079F280598CD00DE4494 /* Handler.swift */,
 			);
-			path = ObjC;
+			path = Core;
+			sourceTree = "<group>";
+		};
+		6E0107A0280598CD00DE4494 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				6E0107A2280598CD00DE4494 /* Log.swift */,
+				6E0107A1280598CD00DE4494 /* DPLog.h */,
+				6E0107A3280598CD00DE4494 /* DPLog.m */,
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		6E0107A4280598CD00DE4494 /* Formatters */ = {
+			isa = PBXGroup;
+			children = (
+				6E0107A5280598CD00DE4494 /* PlainMessageFormatter.swift */,
+			);
+			path = Formatters;
 			sourceTree = "<group>";
 		};
 		6EDB840F20689D7C0025D556 = {
@@ -126,34 +142,12 @@
 		6EDB843320689D850025D556 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				6EDB841C20689D7C0025D556 /* DPLog.h */,
-				6EED0EB824A9C4EE00D1921A /* Core */,
-				6EA340C824A9C7C3003773F8 /* Formatters */,
-				6EED0EB924A9C4F700D1921A /* Loggers */,
-				6EA3410B24A9E565003773F8 /* ObjC */,
+				6E01079B280598CD00DE4494 /* Core */,
+				6E0107A4280598CD00DE4494 /* Formatters */,
+				6E010799280598CD00DE4494 /* Handlers */,
+				6E0107A0280598CD00DE4494 /* Interfaces */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		6EED0EB824A9C4EE00D1921A /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				6EED0EB024A9BA5B00D1921A /* Log.swift */,
-				6EED0EAE24A9BA2100D1921A /* DPLogLevel.swift */,
-				6EED0EB224A9C1FA00D1921A /* DPLogCoordinator.swift */,
-				6EED0EB424A9C27100D1921A /* DPLogger.swift */,
-				6EED0EB624A9C3A000D1921A /* DPLogFormatter.swift */,
-				6EA340C624A9C5BC003773F8 /* DPLogInformation.swift */,
-			);
-			path = Core;
-			sourceTree = "<group>";
-		};
-		6EED0EB924A9C4F700D1921A /* Loggers */ = {
-			isa = PBXGroup;
-			children = (
-				6EA340C924A9CB75003773F8 /* DPConsoleLogger.swift */,
-			);
-			path = Loggers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,8 +157,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6EDB842A20689D7C0025D556 /* DPLog.h in Headers */,
-				6EA3410924A9E556003773F8 /* DPLogObjC.h in Headers */,
+				6E0107AB280598CD00DE4494 /* DPLog.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,15 +263,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6EA340CC24A9CBE4003773F8 /* DPLogDefaultFormatter.swift in Sources */,
-				6EA3410A24A9E556003773F8 /* DPLogObjC.m in Sources */,
-				6EED0EB724A9C3A000D1921A /* DPLogFormatter.swift in Sources */,
-				6EED0EAF24A9BA2100D1921A /* DPLogLevel.swift in Sources */,
-				6EED0EB324A9C1FA00D1921A /* DPLogCoordinator.swift in Sources */,
-				6EED0EB124A9BA5B00D1921A /* Log.swift in Sources */,
-				6EA340C724A9C5BC003773F8 /* DPLogInformation.swift in Sources */,
-				6EED0EB524A9C27100D1921A /* DPLogger.swift in Sources */,
-				6EA340CA24A9CB75003773F8 /* DPConsoleLogger.swift in Sources */,
+				6E0107A6280598CD00DE4494 /* ConsoleHandler.swift in Sources */,
+				6E0107A9280598CD00DE4494 /* Message.swift in Sources */,
+				6E0107AC280598CD00DE4494 /* Log.swift in Sources */,
+				6E0107AE280598CD00DE4494 /* PlainMessageFormatter.swift in Sources */,
+				6E0107AD280598CD00DE4494 /* DPLog.m in Sources */,
+				6E0107A8280598CD00DE4494 /* MessageFormatter.swift in Sources */,
+				6E0107AA280598CD00DE4494 /* Handler.swift in Sources */,
+				6E0107A7280598CD00DE4494 /* Collector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

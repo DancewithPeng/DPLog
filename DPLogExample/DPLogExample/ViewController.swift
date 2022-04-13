@@ -8,7 +8,6 @@
 
 import UIKit
 import DPLog
-import MyLib
 
 enum MyError: Error {
     case ahahha
@@ -34,10 +33,8 @@ class ViewController: UIViewController {
         
         ViewController.demo()
         
-        Demo.sayHello()
-        
         DispatchQueue.concurrentPerform(iterations: 10) { (index) in
-            guard let l = DPLogLevel(rawValue: Int.random(in: 1...4)) else {
+            guard let l = [DPLog.Message.Level.debug, DPLog.Message.Level.info, DPLog.Message.Level.warning, DPLog.Message.Level.error].randomElement() else {
                 return
             }
             
@@ -50,8 +47,6 @@ class ViewController: UIViewController {
                 Log.warning("并发-WARNING")
             case .error:
                 Log.error("并发-ERROR")
-            default:
-                break
             }
         }
     }

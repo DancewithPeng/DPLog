@@ -9,28 +9,6 @@
 import UIKit
 import DPLog
 
-class MyFormatter: DPLogFormatter {
-    func formatString(for info: DPLogInformation) -> String {
-        return "\(info.message ?? "nil")"
-    }
-}
-
-class MyLogger: DPLogger {
-    
-    var logLevel: DPLogLevel
-    
-    var formatter: DPLogFormatter
-    
-    init() {
-        self.logLevel = .debug
-        self.formatter = MyFormatter()
-    }
-    
-    func log(message: String) {
-        print("MyLogger - \(message)")
-    }
-}
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -39,14 +17,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        #if DEBUG
-        Log.setup(loggers: [DPConsoleLogger(logLevel: .debug)])
-        #else
-        Log.setup(loggers: [
-            DPConsoleLogger(logLevel: .error),
-            MyLogger()
-        ])
-        #endif
+        do {
+            try DPLog.Collector.shared.register(
+                    DPLog.ConsoleHandler(
+                        id: "DPLogExample.ConsoleHandler",
+                        level: .verbose,
+                        formatter: DPLog.PlainMessageFormatter()
+                    )
+                )
+        } catch {
+            print(error)
+        }
         
         return true
     }
